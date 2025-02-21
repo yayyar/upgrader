@@ -146,6 +146,7 @@ class Appcast {
         String? itemDescription;
         String? dateString;
         String? fileURL;
+        String? fallbackURL;
         String? maximumSystemVersion;
         String? minimumSystemVersion;
         String? osString;
@@ -173,6 +174,9 @@ class Appcast {
                 } else if (attribute.name.toString() ==
                     AppcastConstants.AttributeURL) {
                   fileURL = attribute.value;
+                } else if (attribute.name.toString() ==
+                    AppcastConstants.AttributeFallbackURL) {
+                  fallbackURL = attribute.value;
                 }
               });
             } else if (name == AppcastConstants.ElementMaximumSystemVersion) {
@@ -217,6 +221,7 @@ class Appcast {
           releaseNotesURL: releaseNotesLink,
           tags: tags,
           fileURL: fileURL,
+          fallbackURL: fallbackURL,
           versionString: newVersion,
         );
         localItems.add(item);
@@ -239,6 +244,7 @@ class AppcastItem {
   final String? minimumSystemVersion;
   final String? maximumSystemVersion;
   final String? fileURL;
+  final String? fallbackURL;
   final int? contentLength;
   final String? versionString;
   final String? osString;
@@ -254,6 +260,7 @@ class AppcastItem {
     this.minimumSystemVersion,
     this.maximumSystemVersion,
     this.fileURL,
+    this.fallbackURL,
     this.contentLength,
     this.versionString,
     this.osString,
@@ -332,6 +339,7 @@ class AppcastConstants {
   static const String ElementTags = 'sparkle:tags';
 
   static const String AttributeURL = 'url';
+  static const String AttributeFallbackURL = 'fallbackURL';
   static const String AttributeLength = 'length';
 
   static const String ElementDescription = 'description';

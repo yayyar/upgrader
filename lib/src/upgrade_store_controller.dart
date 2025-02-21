@@ -165,6 +165,7 @@ class UpgraderAppcastStore extends UpgraderStore {
       required String? country,
       required String? language}) async {
     String? appStoreListingURL;
+    String? appStoreFallbackURL;
     Version? appStoreVersion;
     bool? isCriticalUpdate;
     String? releaseNotes;
@@ -219,12 +220,14 @@ class UpgraderAppcastStore extends UpgraderStore {
       }
 
       appStoreListingURL = bestItem.fileURL;
+      appStoreFallbackURL = bestItem.fallbackURL;
       releaseNotes = bestItem.itemDescription;
     }
 
     final versionInfo = UpgraderVersionInfo(
       installedVersion: installedVersion,
       appStoreListingURL: appStoreListingURL,
+      appStoreFallbackURL: appStoreFallbackURL,
       appStoreVersion: appStoreVersion,
       isCriticalUpdate: isCriticalUpdate,
       releaseNotes: releaseNotes,

@@ -4,6 +4,7 @@ import 'package:version/version.dart';
 
 class UpgraderVersionInfo {
   final String? appStoreListingURL;
+  final String? appStoreFallbackURL;
   final Version? appStoreVersion;
   final Version? installedVersion;
   final bool? isCriticalUpdate;
@@ -12,6 +13,7 @@ class UpgraderVersionInfo {
 
   UpgraderVersionInfo({
     this.appStoreListingURL,
+    this.appStoreFallbackURL,
     this.appStoreVersion,
     this.installedVersion,
     this.isCriticalUpdate,
