@@ -368,7 +368,7 @@ class UpgradeAlertState extends State<UpgradeAlert> {
           cupertino: cupertino,
           text: "PREVIEW",
           context: context,
-          onPressed: () => onUserIgnored(context, true),
+          onPressed: () => onUserPreview(context, true),
           isDefaultAction: false,
         ),
       button(
