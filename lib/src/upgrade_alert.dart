@@ -4,6 +4,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import 'upgrade_messages.dart';
 import 'upgrade_state.dart';
@@ -25,9 +26,11 @@ class UpgradeAlert extends StatefulWidget {
     this.onIgnore,
     this.onLater,
     this.onUpdate,
+    this.onPreview,
     this.shouldPopScope,
     this.showIgnore = true,
     this.showLater = true,
+    this.showPreview = false,
     this.showReleaseNotes = true,
     this.cupertinoButtonTextStyle,
     this.dialogKey,
@@ -49,6 +52,8 @@ class UpgradeAlert extends StatefulWidget {
   /// Return false when the default behavior should not execute.
   final BoolCallback? onIgnore;
 
+  final BoolCallback? onPreview;
+
   /// Called when the later button is tapped or otherwise activated.
   final BoolCallback? onLater;
 
@@ -64,6 +69,9 @@ class UpgradeAlert extends StatefulWidget {
 
   /// Hide or show Later button on dialog (default: true)
   final bool showLater;
+
+  /// Hide or show Preview button on dialog (default: false)
+  final bool showPreview;
 
   /// Hide or show release notes (default: true)
   final bool showReleaseNotes;
@@ -166,6 +174,23 @@ class UpgradeAlertState extends State<UpgradeAlert> {
 
     if (doProcess) {
       widget.upgrader.saveIgnored();
+    }
+
+    if (shouldPop) {
+      popNavigator(context);
+    }
+  }
+
+  void onUserPreview(BuildContext context, bool shouldPop) {
+    if (widget.upgrader.state.debugLogging) {
+      print('upgrader: button tapped: preview');
+    }
+
+    // If this callback has been provided, call it.
+    final doProcess = widget.onPreview?.call() ?? true;
+
+    if (doProcess) {
+      widget.upgrader.sendUserToFallbackURL();
     }
 
     if (shouldPop) {
@@ -285,6 +310,7 @@ class UpgradeAlertState extends State<UpgradeAlert> {
     // disable ignore and later buttons.
     final isBlocked = widget.upgrader.blocked();
     final showIgnore = isBlocked ? false : widget.showIgnore;
+    final showPreview = widget.showPreview;
     final showLater = isBlocked ? false : widget.showLater;
 
     Widget? notes;
@@ -299,7 +325,8 @@ class UpgradeAlertState extends State<UpgradeAlert> {
             children: <Widget>[
               Text(messages.message(UpgraderMessage.releaseNotes) ?? '',
                   style: const TextStyle(fontWeight: FontWeight.bold)),
-              Text(releaseNotes),
+              // Text(releaseNotes),
+              HtmlWidget(releaseNotes),
             ],
           ));
     }
@@ -334,6 +361,14 @@ class UpgradeAlertState extends State<UpgradeAlert> {
           text: messages.message(UpgraderMessage.buttonTitleLater),
           context: context,
           onPressed: () => onUserLater(context, true),
+          isDefaultAction: false,
+        ),
+      if (showPreview)
+        button(
+          cupertino: cupertino,
+          text: "PREVIEW",
+          context: context,
+          onPressed: () => onUserIgnored(context, true),
           isDefaultAction: false,
         ),
       button(

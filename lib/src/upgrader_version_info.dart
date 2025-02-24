@@ -24,6 +24,7 @@ class UpgraderVersionInfo {
   @override
   String toString() {
     return 'appStoreListingURL: $appStoreListingURL, '
+        'appStoreFallbackURL: $appStoreFallbackURL, '
         'appStoreVersion: $appStoreVersion, '
         'installedVersion: $installedVersion, '
         'isCriticalUpdate: $isCriticalUpdate, '

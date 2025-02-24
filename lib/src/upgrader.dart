@@ -501,7 +501,6 @@ class Upgrader with WidgetsBindingObserver {
   /// Launch the app store from the app store listing URL.
   void sendUserToAppStore() async {
     final appStoreListingURL = versionInfo?.appStoreListingURL;
-    final appStoreFallbackURL = versionInfo?.appStoreFallbackURL;
     if (appStoreListingURL == null || appStoreListingURL.isEmpty) {
       if (state.debugLogging) {
         print('upgrader: empty appStoreListingURL');
@@ -523,12 +522,13 @@ class Upgrader with WidgetsBindingObserver {
         if (state.debugLogging) {
           print('upgrader: launch to app store failed: $e');
         }
-        sendUserToFallbackURL(appStoreFallbackURL);
+        sendUserToFallbackURL();
       }
     }
   }
 
-  void sendUserToFallbackURL(String? appStoreFallbackURL) async {
+  void sendUserToFallbackURL() async {
+    final appStoreFallbackURL = versionInfo?.appStoreFallbackURL;
     if (appStoreFallbackURL == null || appStoreFallbackURL.isEmpty) {
       if (state.debugLogging) {
         print('upgrader: empty appStoreFallbackURL');

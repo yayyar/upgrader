@@ -3,6 +3,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import 'alert_style_widget.dart';
 import 'upgrade_messages.dart';
@@ -133,11 +134,12 @@ class UpgradeCardState extends State<UpgradeCard> {
             children: <Widget>[
               Text(appMessages.message(UpgraderMessage.releaseNotes) ?? '',
                   style: const TextStyle(fontWeight: FontWeight.bold)),
-              Text(
-                releaseNotes,
-                maxLines: widget.maxLines,
-                overflow: widget.overflow,
-              ),
+              // Text(
+              //   releaseNotes,
+              //   maxLines: widget.maxLines,
+              //   overflow: widget.overflow,
+              // ),
+              HtmlWidget(releaseNotes)
             ],
           ));
     }
