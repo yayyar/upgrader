@@ -538,7 +538,9 @@ class Upgrader with WidgetsBindingObserver {
     if (await canLaunchUrl(Uri.parse(appStoreFallbackURL))) {
       try {
         await launchUrl(Uri.parse(appStoreFallbackURL),
-            mode: LaunchMode.externalNonBrowserApplication);
+            mode: state.upgraderOS.isAndroid
+                ? LaunchMode.externalNonBrowserApplication
+                : LaunchMode.platformDefault);
       } catch (e) {
         if (state.debugLogging) {
           print('upgrader: launch to fallbackURL failed: $e');
